@@ -44,6 +44,7 @@ parser.add_argument('filenames', help=('.mlt files or directory containing '
     '.mlt files to render'), nargs="*")
 
 if __name__ == '__main__':
+    start = datetime.now()
     args = parser.parse_args()
 
     if not args.r and not args.filenames:
@@ -70,7 +71,7 @@ if __name__ == '__main__':
         parms = [MELT, str(path), "-consumer", f"avformat:{path.stem}.mp4",]
 
         if args.o:
-            parms.append(f'target="{args.output}"')
+            parms.append(f'target="{args.o}"')
         else:
             parms.append(f'target="_rendered/{path.stem}.mp4"')
 
@@ -80,4 +81,5 @@ if __name__ == '__main__':
         print(parms)
         subprocess.run(parms)
 
-    print("\n\nFinished at: " + str(datetime.now()))
+    finish = datetime.now()
+    print(f"\n\nFinished at: {finish} took {finish-start}")
